@@ -1,0 +1,70 @@
+/* Reset básico y estándares generales */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	background-color: #090d00; /* Mantiene el color oscuro */
+	color: #ffffff;
+	line-height: 1.6;
+	min-height: 100vh; /* Asegura que cubra toda la pantalla */
+	overflow-x: hidden; /* Evita desplazamiento horizontal */
+}
+
+/* BACKGROUND - Fondo con efecto siempre presente */
+#bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: -1;
+}
+
+#bg canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* Mejora en textos y enlaces */
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+p {
+	margin-bottom: 15px;
+}
+
+a {
+	color: #4db8ff;
+	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+a:hover {
+	color: #ffffff;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+	body {
+		 font-size: 14px;
+	}
+}
+
+@media (max-width: 480px) {
+	body {
+		 font-size: 12px;
+	}
+}

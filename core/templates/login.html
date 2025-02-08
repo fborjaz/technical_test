@@ -1,0 +1,24 @@
+{% extends "_base.html" %} 
+{% block content %}
+
+<form class="form">
+  <p class="title">Iniciar Sesión</p>
+  <p class="message">
+    Inicia sesión para acceder a tu cuenta.
+  </p>
+
+  <label>
+    <input class="input" type="email" placeholder="" required="" />
+    <span>Correo electrónico</span>
+  </label>
+
+  <label>
+    <input class="input" type="password" placeholder="" required="" />
+    <span>Contraseña</span>
+  </label>
+
+  <button class="submit">Ingresar</button>
+  <p class="signin">¿No tienes una cuenta? <a href="#">Regístrate</a></p>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends "_base.html" %} 
+{% block content %}
+
+<form class="form">
+  <p class="title">Registrarse</p>
+  <p class="message">
+    Regístrate ahora y obtén acceso completo a nuestra aplicación.
+  </p>
+  <div class="flex">
+    <label>
+      <input class="input" type="text" placeholder="" required="" />
+      <span>Nombre</span>
+    </label>
+
+    <label>
+      <input class="input" type="text" placeholder="" required="" />
+      <span>Apellido</span>
+    </label>
+  </div>
+
+  <label>
+    <input class="input" type="email" placeholder="" required="" />
+    <span>Correo electrónico</span>
+  </label>
+
+  <label>
+    <input class="input" type="password" placeholder="" required="" />
+    <span>Contraseña</span>
+  </label>
+  <label>
+    <input class="input" type="password" placeholder="" required="" />
+    <span>Confirmar contraseña</span>
+  </label>
+  <button class="submit">Enviar</button>
+  <p class="signin">¿Ya tienes una cuenta? <a href="#">Iniciar sesión</a></p>
+</form>
+
+{% endblock content %}
