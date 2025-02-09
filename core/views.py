@@ -1,15 +1,15 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.contrib import messages
-from django.contrib.messages.storage.fallback import FallbackStorage
+from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
-from django.core.mail import EmailMessage
-from django.utils import timezone
-from django.urls import reverse
-from .models import *
-from django.core.exceptions import ValidationError
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.views import PasswordResetView
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from .models import CustomUser
+import uuid
 
 # Create your views here.
 def Home(request):
@@ -21,7 +21,7 @@ def RegisterView(request):
         last_name = request.POST.get('last_name', '').strip()
         email = request.POST.get('email', '').strip()
         password = request.POST.get('password', '')
-        password_confirm = request.POST.get('conf_password', '')
+        password_confirm = request.POST.get('password_confirm', '')
 
         # Validación de campos vacíos
         if not all([name, last_name, email, password, password_confirm]):
@@ -44,24 +44,59 @@ def RegisterView(request):
             return redirect('register')
 
         # Verificar si el usuario ya existe
-        if User.objects.filter(email=email).exists():
+        if get_user_model().objects.filter(email=email).exists():
             messages.error(request, 'El correo electrónico ya está registrado.')
             return redirect('register')
 
         # Crear usuario de forma segura
         try:
-            user = User.objects.create_user(username=email, email=email, password=password)
+            # Crear un nuevo usuario de tipo CustomUser
+            user = get_user_model().objects.create_user(email=email, password=password)
             user.first_name = name
             user.last_name = last_name
             user.save()
-        except ValidationError as e:
+
+            # No necesitas crear un CustomUser separado, ya que 'user' es un CustomUser
+            # Generar el token de verificación de correo
+            user.generate_email_token()  # Si el método 'generate_email_token' está en CustomUser
+            user.save()
+
+            # Enviar el correo de verificación
+            token_url = f"{request.scheme}://{get_current_site(request).domain}/verify-email/{user.email_token}/"
+            email_subject = 'Verifica tu correo electrónico'
+            email_message = render_to_string('verify_email.html', {
+                'user': user,
+                'token_url': token_url,
+            })
+            send_mail(email_subject, email_message, settings.DEFAULT_FROM_EMAIL, [email])
+
+            messages.success(request, 'Usuario registrado exitosamente. Por favor verifica tu correo electrónico.')
+            return redirect('login')
+
+        except Exception as e:
             messages.error(request, f'Error al registrar usuario: {e}')
             return redirect('register')
 
-        messages.success(request, 'Usuario registrado exitosamente. Inicia sesión.')
+    return render(request, 'register.html', {'title': 'Registro'})
+
+
+def VerifyEmailView(request, token):
+    try:
+        user = CustomUser.objects.get(email_token=token)
+
+        if user.is_token_expired():
+            messages.error(request, 'El enlace de verificación ha expirado.')
+            return redirect('login')
+
+        user.email_verified = True
+        user.email_token = ''  # Limpiamos el token después de la verificación
+        user.save()
+        messages.success(request, 'Correo electrónico verificado exitosamente. Ahora puedes iniciar sesión.')
         return redirect('login')
 
-    return render(request, 'register.html', {'title': 'Registro'})
+    except CustomUser.DoesNotExist:
+        messages.error(request, 'El enlace de verificación es inválido o ha expirado.')
+        return redirect('login')
 
 
 def LoginView(request):
@@ -90,6 +125,10 @@ def LoginView(request):
 
     return render(request, 'login.html', {'title': 'Iniciar Sesión', 'error_message': error_message})
 
+class CustomPasswordResetView(PasswordResetView):
+    def form_valid(self, form):
+        messages.success(self.request, 'Te hemos enviado un correo para restablecer tu contraseña.')
+        return super().form_valid(form)
 
 def LogoutView(request):
     logout(request)

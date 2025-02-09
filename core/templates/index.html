@@ -1,5 +1,50 @@
 {% extends "_base.html" %}
 
+{% block title %}Bienvenido a la aplicación{% endblock %}
+
 {% block content %}
-  <h1>Hola Mundo</h1>
-{% endblock content %}
+<div class="home-card-container">
+    <div class="home-card">
+        <h1 class="home-card-title">¿Qué es un CRUD en Django?</h1>
+        <p class="home-card-description">
+            Un <strong>CRUD</strong> es un acrónimo de las operaciones básicas que puedes realizar sobre los datos en una aplicación: 
+            <strong>Crear</strong>, <strong>Leer</strong>, <strong>Actualizar</strong> y <strong>Eliminar</strong>. En Django, 
+            un CRUD es una funcionalidad que permite interactuar con los datos almacenados en la base de datos de una forma sencilla 
+            y eficiente utilizando vistas y formularios.
+        </p>
+
+        <h2 class="home-card-subtitle">¿Cómo funciona un CRUD en Django?</h2>
+        <p class="home-card-description">
+            Django proporciona una estructura para crear aplicaciones web rápidamente. Con el patrón MVC (Modelo-Vista-Controlador), 
+            puedes gestionar la base de datos, las vistas y la lógica de negocio de manera eficaz.
+        </p>
+
+        <div class="crud-section">
+            <h3 class="crud-title">Operaciones CRUD</h3>
+            <ul class="crud-text">
+                <li><strong>Crear:</strong> Crear un nuevo objeto en la base de datos utilizando formularios o vistas.</li>
+                <li><strong>Leer:</strong> Leer los datos almacenados en la base de datos, generalmente mediante vistas que muestran 
+                información al usuario.</li>
+                <li><strong>Actualizar:</strong> Modificar los datos existentes en la base de datos.</li>
+                <li><strong>Eliminar:</strong> Eliminar un objeto de la base de datos cuando ya no se necesita.</li>
+            </ul>
+        </div>
+
+        <h2 class="home-card-subtitle">Ejemplo de un CRUD en Django</h2>
+        <p class="home-card-description">
+            Para crear un CRUD en Django, sigues estos pasos básicos:
+        </p>
+        <ul class="crud-text">
+            <li>1. Crear un modelo en <code>models.py</code> que represente los datos que quieres manejar.</li>
+            <li>2. Crear vistas en <code>views.py</code> para manejar las operaciones de creación, lectura, actualización y eliminación.</li>
+            <li>3. Definir URLs en <code>urls.py</code> para asociar las vistas con rutas específicas.</li>
+            <li>4. Crear formularios en <code>forms.py</code> para permitir que los usuarios interactúen con los datos.</li>
+        </ul>
+
+        <p class="home-card-description mt-4">
+            Con estas operaciones, puedes gestionar tus datos fácilmente desde la interfaz de usuario, todo ello respaldado por la poderosa 
+            infraestructura de Django.
+        </p>
+    </div>
+</div>
+{% endblock %}

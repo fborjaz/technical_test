@@ -1,0 +1,81 @@
+/* Estilos generales para la página */
+.home-card-container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+   background: rgba(0, 0, 0, 0.1); /* Fondo translúcido para que se vea el fondo */
+   padding: 20px; /* Agrega espacio alrededor de la card */
+}
+
+/* Estilos para la card */
+.home-card {
+   background: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-translúcido */
+   border-radius: 10px;
+   padding: 30px;
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+   max-width: 800px;
+   width: 100%;
+   backdrop-filter: blur(10px); /* Para darle un efecto de desenfoque al fondo */
+   margin-top: 20px; /* Espacio arriba de la card */
+   margin-bottom: 20px; /* Espacio abajo de la card */
+}
+
+/* Títulos dentro de la card */
+.home-card-title {
+   font-size: 2.5rem;
+   font-weight: bold;
+   text-align: center;
+   margin-bottom: 20px;
+   color: #2d3748; /* Título con color oscuro */
+}
+
+.home-card-subtitle {
+   font-size: 2rem;
+   font-weight: bold;
+   margin-top: 30px;
+   margin-bottom: 15px;
+   color: #2d3748; /* Subtítulo con color oscuro */
+}
+
+/* Descripción de la card */
+.home-card-description {
+   font-size: 1.1rem;
+   line-height: 1.8;
+   color: #4a5568; /* Color gris oscuro */
+   margin-bottom: 20px;
+}
+
+/* Lista de operaciones CRUD */
+.crud-section {
+   background: #f7fafc;
+   padding: 20px;
+   border-radius: 8px;
+   margin-bottom: 30px;
+}
+
+.crud-title {
+   font-size: 1.5rem;
+   font-weight: bold;
+   color: #2d3748;
+   margin-bottom: 10px;
+}
+
+.crud-text {
+   list-style-type: disc;
+   padding-left: 20px;
+   font-size: 1.1rem;
+   color: #4a5568;
+}
+
+.crud-text li {
+   margin-bottom: 10px;
+}
+
+/* Código en el texto */
+code {
+   font-family: 'Courier New', monospace;
+   background-color: #edf2f7;
+   padding: 2px 6px;
+   border-radius: 4px;
+}

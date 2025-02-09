@@ -53,6 +53,8 @@ wheels/
 pip-log.txt
 pip-delete-this-directory.txt
 htmlcov/
+migrations/
+*migrations/
 
 # Tailwind CSS specific
 tailwind.config.js
