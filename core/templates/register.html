@@ -1,38 +1,83 @@
 {% extends "_base.html" %} 
+{% block title %}{{ title }}{% endblock %} 
 {% block content %}
 
-<form class="form">
+{% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      {% if message.tags == 'error' %}
+        <div class="message error">
+          {{ message }}
+        </div>
+      {% endif %}
+
+      {% if message.tags == 'success' %}
+        <div class="message success">
+          {{ message }}
+        </div>
+      {% endif %}
+
+      {% if message.tags == 'info' %}
+        <div class="message info">
+          {{ message }}
+        </div>
+      {% endif %}
+
+      {% if message.tags == 'warning' %}
+        <div class="message warning">
+          {{ message }}
+        </div>
+      {% endif %}
+
+      {% if message.tags == 'debug' %}
+        <div class="message debug">
+          {{ message }}
+        </div>
+      {% endif %}
+      <div class="message {{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<form method="POST" class="form">
+  {% csrf_token %}
+
   <p class="title">Registrarse</p>
   <p class="message">
     Regístrate ahora y obtén acceso completo a nuestra aplicación.
   </p>
+  
   <div class="flex">
     <label>
-      <input class="input" type="text" placeholder="" required="" />
+      <input class="input" type="text" name="name" required />
       <span>Nombre</span>
     </label>
 
     <label>
-      <input class="input" type="text" placeholder="" required="" />
+      <input class="input" type="text" name="last_name" required />
       <span>Apellido</span>
     </label>
   </div>
 
   <label>
-    <input class="input" type="email" placeholder="" required="" />
+    <input class="input" type="email" name="email" required />
     <span>Correo electrónico</span>
   </label>
 
   <label>
-    <input class="input" type="password" placeholder="" required="" />
+    <input class="input" type="password" name="password" required />
     <span>Contraseña</span>
   </label>
+  
   <label>
-    <input class="input" type="password" placeholder="" required="" />
+    <input class="input" type="password" name="password_confirm" required />
     <span>Confirmar contraseña</span>
   </label>
-  <button class="submit">Enviar</button>
-  <p class="signin">¿Ya tienes una cuenta? <a href="#">Iniciar sesión</a></p>
+
+  <button class="submit">Registrarse</button>
+  <p class="signin">¿Ya tienes una cuenta? <a href="{% url 'login' %}">Iniciar sesión</a></p>
 </form>
 
 {% endblock content %}

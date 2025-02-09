@@ -1,24 +1,44 @@
 {% extends "_base.html" %} 
+{% block title %}{{ title }}{% endblock %} 
 {% block content %}
 
-<form class="form">
+<form method="POST" class="form">
+  {% csrf_token %}
+
   <p class="title">Iniciar Sesión</p>
-  <p class="message">
-    Inicia sesión para acceder a tu cuenta.
-  </p>
+  <p class="message">Inicia sesión para acceder a tu cuenta.</p>
+
+<!-- Mensajes de error o éxito -->
+{% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      <p class="message {{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<!-- Mensaje de error almacenado en la sesión -->
+{% if error_message %}
+  <div class="messages">
+    <p class="message error">{{ error_message }}</p>
+  </div>
+{% endif %}
 
   <label>
-    <input class="input" type="email" placeholder="" required="" />
+    <input class="input" type="email" name="email" required />
     <span>Correo electrónico</span>
   </label>
 
   <label>
-    <input class="input" type="password" placeholder="" required="" />
+    <input class="input" type="password" name="password" required />
     <span>Contraseña</span>
   </label>
 
   <button class="submit">Ingresar</button>
-  <p class="signin">¿No tienes una cuenta? <a href="#">Regístrate</a></p>
+
+  <p class="signin">
+    ¿No tienes una cuenta? <a href="{% url 'register' %}">Regístrate</a>
+  </p>
 </form>
 
 {% endblock content %}
